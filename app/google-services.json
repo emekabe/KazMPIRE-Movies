@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "814677206377",
+    "firebase_url": "https://kazmpire-movies.firebaseio.com",
+    "project_id": "kazmpire-movies",
+    "storage_bucket": "kazmpire-movies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814677206377:android:f2ded22520c0b5a58149f8",
+        "android_client_info": {
+          "package_name": "com.kazmpire.kazmpiremovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814677206377-nb5mbg5608lcbqnq3ffb8cf5ibj4ua9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kazmpire.kazmpiremovies",
+            "certificate_hash": "0e998abb70b7aaffa7f9cd71b61f184aacd063f8"
+          }
+        },
+        {
+          "client_id": "814677206377-sbijung7hckvtola7vfjqkbplv936vas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyAOCIAsxmsAm5ddlWmrpx3ZB4HWHTtj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814677206377-sbijung7hckvtola7vfjqkbplv936vas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
