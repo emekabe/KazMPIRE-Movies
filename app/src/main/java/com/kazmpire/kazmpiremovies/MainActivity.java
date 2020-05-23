@@ -1,5 +1,6 @@
 package com.kazmpire.kazmpiremovies;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,11 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
@@ -25,18 +31,18 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null){
-            Intent openFacts = new Intent(this, FactsActivity.class);
-            startActivity(openFacts);
-            finish();
+            openAnotherActivity();
         }
         else {
             startActivityForResult(
                     AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(
-                            Arrays.asList( new AuthUI.IdpConfig.PhoneBuilder().build())
-                    )
-                    .build(),
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(
+                                    Arrays.asList( new AuthUI.IdpConfig.PhoneBuilder().build())
+                            )
+                            .setTheme(R.style.LoginTheme)
+                            .setLogo(R.drawable.login_logo)
+                            .build(),
                     RC_SIGN_IN );
         }
 
@@ -54,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //                if (user != null) Toast.makeText(this, "Signed in as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                 if (user != null) Toast.makeText(this, "Signed in", Toast.LENGTH_SHORT).show();
-                Intent openFacts = new Intent(this, FactsActivity.class);
-                startActivity(openFacts);
-                finish();
+                openAnotherActivity();
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -65,5 +69,34 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    private void openAnotherActivity(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference dbReference = database.getReference("users");
+
+        dbReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user1 = dataSnapshot.getValue(User.class);
+                try {
+                    assert user1 != null;
+                    Toast.makeText(MainActivity.this, "Welcome " + user1.getFirstName(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, FactsActivity.class));
+                    finish();
+                } catch (NullPointerException e){
+                    startActivity(new Intent(MainActivity.this, RegisterUser.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
