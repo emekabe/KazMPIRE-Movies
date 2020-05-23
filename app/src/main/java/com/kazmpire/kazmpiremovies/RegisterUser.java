@@ -64,9 +64,12 @@ public class RegisterUser extends AppCompatActivity {
                     DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("users");
 
                     if (!(firstName.isEmpty() || userName.isEmpty() || password.isEmpty() || reenterPassword.isEmpty())){
-                        User newUser = new User(user.getUid(), firstName, lastName, userName, password);
-                        dbReference.child(user.getUid()).setValue(newUser);
-                        startActivity(new Intent(RegisterUser.this, FactsActivity.class));
+                        if (passWordValidator(password, reenterPassword)){
+                            User newUser = new User(user.getUid(), firstName, lastName, userName, password);
+                            dbReference.child(user.getUid()).setValue(newUser);
+                            startActivity(new Intent(RegisterUser.this, FactsActivity.class));
+                            finish();
+                        }
                     }
                     else {
                         Toast.makeText(RegisterUser.this, "Please fill out all the fields", Toast.LENGTH_LONG).show();
@@ -76,7 +79,20 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
 
+    }
 
+    private boolean passWordValidator(String pass1, String pass2){
 
+        if (!pass1.equals(pass2)){
+            Toast.makeText(RegisterUser.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (pass1.length() < 8){
+            Toast.makeText(RegisterUser.this, "Password too short", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

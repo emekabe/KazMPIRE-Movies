@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     RC_SIGN_IN );
         }
-
     }
 
     @Override
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private void openAnotherActivity(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //code to check if firebase signed in user has registered
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference dbReference = database.getReference("users");
 
