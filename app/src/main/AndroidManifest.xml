@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/kaz_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterUser"></activity>
+        <activity android:name=".RegisterUser" />
         <activity
             android:name=".FactsActivity"
             android:label="Facts" />
