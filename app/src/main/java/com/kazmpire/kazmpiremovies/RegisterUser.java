@@ -95,4 +95,14 @@ public class RegisterUser extends AppCompatActivity {
 
         return true;
     }
+
+    private boolean usernameValidator(String username){
+
+        if (username.contains(" ")){
+            Toast.makeText(RegisterUser.this, "Can't have spaces in username", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
 }
