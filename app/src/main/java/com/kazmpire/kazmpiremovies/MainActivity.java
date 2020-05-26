@@ -89,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 } catch (NullPointerException e){
                     startActivity(new Intent(MainActivity.this, RegisterUser.class));
                     finish();
+                } catch (Exception e){
+                    Toast.makeText(MainActivity.this, "Another error occured.\nPlease register.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, RegisterUser.class));
+                    finish();
                 }
             }
 

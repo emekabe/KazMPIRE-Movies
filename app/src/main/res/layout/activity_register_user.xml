@@ -11,6 +11,15 @@
         android:padding="16dp"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REGISTER"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="36sp"
+            android:layout_marginBottom="24dp"/>
+
         <EditText
             android:id="@+id/first_name_field"
             android:layout_width="match_parent"
