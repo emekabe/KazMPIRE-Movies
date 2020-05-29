@@ -9,6 +9,7 @@ public class User {
     private String lastName;
     private String email;
     private String username;
+    private String usernameSmall;
     private String password;
 
     private List <String> interests;
@@ -28,6 +29,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.usernameSmall = username.toLowerCase();
         this.password = password;
 
         registered = true;
@@ -38,6 +40,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.usernameSmall = username.toLowerCase();
         this.password = password;
 
         this.interests = interests;
@@ -83,6 +86,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUsernameSmall() {
+        return usernameSmall;
+    }
+
+    public void setUsernameSmall(String username) {
+        this.usernameSmall = username.toLowerCase();
     }
 
     public String getPassword() {
