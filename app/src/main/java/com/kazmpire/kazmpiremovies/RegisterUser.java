@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,17 +77,16 @@ public class RegisterUser extends AppCompatActivity {
 
                     final DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("users");
 
-                    if (!(firstName.isEmpty() || userName.isEmpty() || password.isEmpty() || reenterPassword.isEmpty())){
-                        if (usernameValidator(userName) && passWordValidator(password, reenterPassword)){
+                    if (true || !(firstName.isEmpty() || userName.isEmpty() || password.isEmpty() || reenterPassword.isEmpty())){
+                        if (true || usernameValidator(userName) && passWordValidator(password, reenterPassword)){
 
-                            Query q = dbReference.orderByChild("username").equalTo(userName);
+                            Query q = dbReference.orderByChild("usernameSmall").equalTo(userName.toLowerCase());
 
                             q.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    // TODO 1: Toast this later
-//                                    dataSnapshot.getChildren().iterator().next().getValue(User.class).getUsername().toLowerCase();
+                                    Toast.makeText(RegisterUser.this, dataSnapshot.getChildren().iterator().next().getValue(User.class).getPassword().toLowerCase(), Toast.LENGTH_SHORT).show();
 
                                     if (dataSnapshot.exists()){
                                         Toast.makeText(RegisterUser.this, "Username already taken", Toast.LENGTH_SHORT).show();
@@ -94,10 +94,14 @@ public class RegisterUser extends AppCompatActivity {
                                     }
                                     else {
                                         User newUser = new User(user.getUid(), firstName, lastName, userName, password);
-                                        dbReference.child(user.getUid()).setValue(newUser);
-                                        progressBar.setVisibility(View.GONE);
-                                        startActivity(new Intent(RegisterUser.this, FactsActivity.class));
-                                        finish();
+                                        dbReference.child(user.getUid()).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                progressBar.setVisibility(View.GONE);
+                                                startActivity(new Intent(RegisterUser.this, FactsActivity.class));
+                                                finish();
+                                            }
+                                        });
                                     }
 
                                 }
